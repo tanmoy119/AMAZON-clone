@@ -32,7 +32,7 @@ function Header() {
                 </Link>
 
 
-                <Link className='link' to="/orders" >
+                <Link className='link' to="/order" >
                     <span className='span1'>Returns</span>
                     <span className='span2'>&Orders</span>
                 </Link>
@@ -73,7 +73,7 @@ display: flex;
 align-items: center;
 position: sticky;
 top: 0;
-z-index: 100;
+//z-index: 100;
 
 `
 const HeaderSearch = styled.div`
@@ -98,6 +98,7 @@ flex: 1;
 
 const Menuitem = styled.div`
 display: flex;
+
 justify-content: space-evenly;
 align-items: center;
     .link{
@@ -113,6 +114,7 @@ align-items: center;
           //  margin-top: 10px;
         }
         .span2{
+            overflow: hidden;
             font-size: 18px;
             font-weight: 800;
         }
