@@ -14,7 +14,11 @@ function App() {
           <Header/>
           <Home/>
           </>}/>
-          <Route path="/login" />
+          <Route path="/login" element={
+            <>
+            
+            </>
+          }/>
           <Route path="/about" />
           <Route path="/order" element={
             <>

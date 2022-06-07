@@ -110,13 +110,14 @@ align-items: center;
         margin: 0 10px 0 10px;
 
         .span1{
-            font-size: 14px;
+            font-size: 12px;
+            overflow: hidden;
           //  margin-top: 10px;
         }
         .span2{
             overflow: hidden;
-            font-size: 18px;
-            font-weight: 800;
+            font-size: 14px;
+            font-weight: 700;
         }
         .flagicon{
             height: 20px;

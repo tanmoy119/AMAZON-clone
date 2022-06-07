@@ -51,7 +51,7 @@ function Home() {
   }
   
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -64,7 +64,7 @@ function Home() {
       {/* Image Slider */}
         <Carousel {...settings}>
             <Wrap>
-                <Homeimg src="https://m.media-amazon.com/images/I/711Y9Al9RNL._SX3000_.jpg"/>
+                <Homeimg src="https://images-eu.ssl-images-amazon.com/images/G/31/SmallAppliances-22/LA_SA_SummerPage-22/PC_FDFO-eos-june._CB636252795_.jpg"/>
             </Wrap>
             <Wrap>
                 <Homeimg src="https://m.media-amazon.com/images/I/61-8rBAD68L._SX3000_.jpg"/>
@@ -87,7 +87,16 @@ function Home() {
           </Carousel>
 
           {/* Products */}
+          <div className="carts">
           <Product data={data} />
+          <Product data={data} />
+          <Product data={data} />
+          <Product data={data} />
+          <Product data={data} />
+          <Product data={data} />
+          <Product data={data} />
+          <Product data={data} />
+          </div>
 
     </Cointainer>
   )
@@ -96,7 +105,10 @@ function Home() {
 export default Home;
 
 const Carousel = styled(Slider)`
-overflow-y: hidden;
+//overflow-y: hidden;
+//z-index: -1;
+margin-bottom: -150px;
+
     .slick-list{
         overflow: visible;
     }
@@ -110,19 +122,25 @@ const Wrap = styled.div`
 object-fit: contain;
 border: hidden;
 
+
 `;
 
 const Cointainer = styled.div`
-height: 200vh;
+//height: 200vh;
 max-width: 1500px;
 margin-right: auto;
 margin-left: auto;
+    .carts{
+      display: grid;
+      grid-template-columns: auto auto auto auto;
+      grid-template-rows: auto auto auto auto;
+      gap: 20px;
+      margin:15px;
+    }
 `
 
 const Homeimg= styled.img`
 //object-fit: contain;
-border: hidden;
-border-color: transparent;
 cursor: pointer;
 width:100%;
 mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
