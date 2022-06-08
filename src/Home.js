@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState  } from 'react'
 import styled from 'styled-components';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Product from './Product';
+import axios from "axios";
+
+const url ='http://localhost:5000/get/cart/data?key=tanmoy';
 
 
 function SampleNextArrow(props) {
@@ -29,26 +32,17 @@ function SamplePrevArrow(props) {
 }
 
 function Home() {
-  const data= {
-    heading:'Shop & Pay | Earn rewards daily',
-    fild1:{
-      title:'Claim your scratch cards',
-      img:'https://images-eu.ssl-images-amazon.com/images/G/31/AmazonPay/Rewards/GWBTFPercolateCards/PC_Quard_Card_186X116_ScratchCard._SY116_CB627364845_.jpg'
-    },
-    fild2:{
-      title:'Redeem your collected rewards',
-      img:'https://images-eu.ssl-images-amazon.com/images/G/31/AmazonPay/Rewards/GWBTFPercolateCards/PC_Quard_Card_186X116_CollectedOffers._SY116_CB627364845_.jpg'
-    },
-    fild3:{
-      title:'Unlock more rewards when you pay or shop',
-      img:'https://images-eu.ssl-images-amazon.com/images/G/31/AmazonPay/Rewards/GWBTFPercolateCards/PC_Quard_Card_186X116_WinMore._SY116_CB627364845_.jpg'
-    },
-    fild4:{
-      title:'Explore all offers in one place',
-      img:'https://images-eu.ssl-images-amazon.com/images/G/31/AmazonPay/Rewards/GWBTFPercolateCards/PC_Quard_Card_186X116_PayAndShop._SY116_CB627364845_.jpg'
+  const [data,setData] = useState([]);
+
+  useEffect(()=>{
+    async function fetchData(){
+      const request = await axios.get(url);
+      setData(request.data);
+      //console.log(request);
     }
-    
-  }
+    fetchData();
+  },[]);
+  console.log(data);
   
   const settings = {
     dots: false,
@@ -88,14 +82,14 @@ function Home() {
 
           {/* Products */}
           <div className="carts">
-          <Product data={data} />
-          <Product data={data} />
-          <Product data={data} />
-          <Product data={data} />
-          <Product data={data} />
-          <Product data={data} />
-          <Product data={data} />
-          <Product data={data} />
+          <Product data={data[0]} />
+          <Product data={data[1]} />
+          <Product data={data[2]} />
+          <Product data={data[0]} />
+          <Product data={data[1]} />
+          <Product data={data[2]} />
+          <Product data={data[0]} />
+          <Product data={data[1]} />
           </div>
 
     </Cointainer>
