@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Product from './Product';
 import axios from "axios";
 
-const url ='http://localhost:5000/get/cart/data?key=tanmoy';
+//const url ='http://localhost:5000/get/cart/data?key=tanmoy';
 
 
 function SampleNextArrow(props) {
@@ -32,6 +32,7 @@ function SamplePrevArrow(props) {
 }
 
 function Home() {
+  const url ='http://localhost:5000/get/cart/data?key=tanmoy';
   const [data,setData] = useState([]);
 
   useEffect(()=>{
@@ -41,7 +42,7 @@ function Home() {
       //console.log(request);
     }
     fetchData();
-  },[]);
+  },[url]);
   console.log(data);
   
   const settings = {
@@ -58,7 +59,7 @@ function Home() {
       {/* Image Slider */}
         <Carousel {...settings}>
             <Wrap>
-                <Homeimg src="https://images-eu.ssl-images-amazon.com/images/G/31/SmallAppliances-22/LA_SA_SummerPage-22/PC_FDFO-eos-june._CB636252795_.jpg"/>
+                <Homeimg src="https://images-eu.ssl-images-amazon.com/images/G/31/AmazonVideo/2021/X-site/SingleTitle/KGFChapter2file/Alllanguages/3000x1200_Hero-Tall_NP._CB635770012_.jpg"/>
             </Wrap>
             <Wrap>
                 <Homeimg src="https://m.media-amazon.com/images/I/61-8rBAD68L._SX3000_.jpg"/>
@@ -82,14 +83,20 @@ function Home() {
 
           {/* Products */}
           <div className="carts">
-          <Product data={data[0]} />
+          {
+            data.map((ele)=>{
+              return <Product data={ele} />
+            })
+          }
+          
+          {/* <Product data={data[0]} />
           <Product data={data[1]} />
           <Product data={data[2]} />
-          <Product data={data[0]} />
-          <Product data={data[1]} />
-          <Product data={data[2]} />
-          <Product data={data[0]} />
-          <Product data={data[1]} />
+          <Product data={data[3]} />
+          <Product data={data[4]} />
+          <Product data={data[5]} />
+          <Product data={data[6]} />
+          <Product data={data[7]} /> */}
           </div>
 
     </Cointainer>
