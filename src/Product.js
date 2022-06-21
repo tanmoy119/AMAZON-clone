@@ -46,6 +46,7 @@ export default Product;
 
 const Card = styled.div`
 z-index: 1;
+//overflow-x: hidden;
 padding: 15px;
 width: 320px;
 //margin: 20px;
@@ -59,9 +60,9 @@ flex-direction: column;
     }
 
     .main{
-        display:grid;
-        grid-template-columns: auto auto;
-        grid-template-row: auto auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-row: repeat(2, 1fr);
         gap:10px;
 
         .fild{

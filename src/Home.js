@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Product from './Product';
 import axios from "axios";
+import Row from './Row';
 
 //const url ='http://localhost:5000/get/cart/data?key=tanmoy';
 
@@ -56,6 +57,7 @@ function Home() {
   };
   return (
     <Cointainer >
+      <div className="head">
       {/* Image Slider */}
         <Carousel {...settings}>
             <Wrap>
@@ -88,16 +90,11 @@ function Home() {
               return <Product data={ele} />
             })
           }
-          
-          {/* <Product data={data[0]} />
-          <Product data={data[1]} />
-          <Product data={data[2]} />
-          <Product data={data[3]} />
-          <Product data={data[4]} />
-          <Product data={data[5]} />
-          <Product data={data[6]} />
-          <Product data={data[7]} /> */}
           </div>
+
+          </div>
+          <Row/>
+          <Row/>
 
     </Cointainer>
   )
@@ -106,7 +103,8 @@ function Home() {
 export default Home;
 
 const Carousel = styled(Slider)`
-//overflow-y: hidden;
+
+
 //z-index: -1;
 margin-bottom: -150px;
 
@@ -127,14 +125,13 @@ border: hidden;
 `;
 
 const Cointainer = styled.div`
-//height: 200vh;
 max-width: 1500px;
 margin-right: auto;
 margin-left: auto;
     .carts{
       display: grid;
-      grid-template-columns: auto auto auto auto;
-      grid-template-rows: auto auto auto auto;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 1fr );
       gap: 20px;
       margin:15px;
     }

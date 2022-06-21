@@ -71,9 +71,10 @@ height: 60px;
 width:100vw;
 display: flex;
 align-items: center;
-position: sticky;
+//position: sticky;
 top: 0;
-//z-index: 100;
+z-index: 1;
+overflow: hidden;
 
 `
 const HeaderSearch = styled.div`
