@@ -3,8 +3,13 @@ import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
+import { useSelector } from 'react-redux';
 
 function Header() {
+
+    const getdata = useSelector((state)=> state.cartreducer.carts);
+    console.log(getdata);
+
     let Data; 
   return (
           <Nav>
@@ -42,7 +47,7 @@ function Header() {
                     <span >
                     <AddShoppingCartOutlinedIcon className='cicon'/>
                     </span>
-                    <span className='span1' >0</span>
+                    <span className='span1' >{getdata.length}</span>
                 </Link>
                 
                 

@@ -4,6 +4,7 @@ import './App.css';
 import Home from "./Home";
 import Header from "./Header";
 import ItemPage from "./ItemPage";
+import Cart from "./Cart";
 //import styled from "styled-components";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route path="/cart" element={
             <>
             <Header/>
+            <Cart/>
             </>
           }  />
        </Routes> 

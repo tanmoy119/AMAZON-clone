@@ -1,39 +1,96 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import styled from 'styled-components';
+import  queryString from 'query-string';
+import { useDispatch } from 'react-redux';
+import { ADD } from './redux/actions/action';
+
 
 function ItemPage() {
+
+
+    const dispatch = useDispatch();
+    const send = (e)=>{
+        dispatch(ADD(e));
+    }
+
+
+
+
+    const location = useLocation();
+   let queries = queryString.parse(location.search);
+   console.log(queries.id);
+    const url = `http://localhost:5000/get/product/data/id?key=tanmoy&id=${queries.id}`;
+    
+    const[imgs,setImgs] = useState([]);
+    const[img,setImg] = useState('');
+    const[data,setData] = useState({});
+    const[brand,setBrand] = useState('');
+    const[aboutdataK,setAboutdataK] = useState([]);
+    const[aboutdataV,setAboutdataV] = useState([]);
+    const[about,setAbout] = useState([]);
+
+    useEffect(()=>{
+        async function fetchData(){
+          const request = await axios.get(url);
+          setData(request.data[0]);
+          const i = request.data[0].image;
+          setImg(i.img1);
+         const arr= Object.values(request.data[0].image);
+         setImgs(arr);
+        // console.log(request.data[0].aboutdata.Brand);
+         setBrand(request.data[0].aboutdata.Brand)
+         const arr2 = Object.keys(request.data[0].aboutdata);
+         setAboutdataK(arr2);
+         const arr3 = Object.values(request.data[0].aboutdata);
+         setAboutdataV(arr3);
+         setAbout(request.data[0].about);
+        }
+        fetchData();
+      },[url]);
+     
+console.log(brand);
   return (
     <Cointainer>
         <div className="cointainer">
         <ItemImg>
             
         <div className="smallimg">
-                <img src="https://m.media-amazon.com/images/I/21psCtgM5BL._SS40_.jpg" alt="" />
-                <img src="https://m.media-amazon.com/images/I/41KKgUZQILL._SS40_.jpg" alt="" />
-                <img src="https://m.media-amazon.com/images/I/31yCCxd9cYL._SS40_.jpg" alt="" />
+            {
+               
+                imgs.map((cl)=>{
+                    return   <img onMouseEnter={()=>{setImg(cl)}} src={cl} alt="" />
+                })
+            }
+              
+             
         </div>
-            <img src="https://m.media-amazon.com/images/I/71gEuyRXIDL._SX679_.jpg" alt="" />
+        
+            <img src={img} alt="" />
+            <span className='tag' style={{position:"absolute",top:"850px", left:"490px"}}>Roll over image to zoom in</span>
+            
         </ItemImg>
         <div className="itemData">
-            <span className="heading">HP X200 Wireless Mouse with 2.4 GHz Wireless connectivity, Adjustable DPI up to 1600, ambidextrous Design, and 18-Month Long Battery Life. 3-Years Warranty (6VY95AA)</span> <br />
-            <Link className="brand" to=''><span >Visit the HP Store</span></Link> <br />
+            <span className="heading">{data.heading}</span> <br />
+            <Link className="brand" to=''><span >Visit the {brand} Store</span></Link> <br />
             <div className="acl">
             <div className="ac">
                 <span>Amazon's</span>
                 <span style={{color:'#F69931'}}>/Choice</span>
                 
             </div>
-            <span>for {`"hp wireless mouse"`}</span>
+            <span>for {`"${brand}"`}</span>
             </div>
             <hr />
             <div className="price">
-                <span style={{color:"#CC0C39"}}>-33% </span>
-                <span style={{fontSize:"28px"}} >₹500</span>
+                <span style={{color:"#CC0C39"}}>-{parseInt((data.oldprice-data.newprice)*100/data.oldprice)}% </span>
+                <span style={{fontSize:"28px"}} >₹{data.newprice}</span>
             </div>
             <div className="prePrice">
             <span>M.R.P:₹</span>
-            <span style={{textDecoration:'line-through'}} >999.00</span>
+            <span style={{textDecoration:'line-through'}} >{data.oldprice}.00</span>
             </div>
             <span style={{fontSize:"14px"}}> Inclusive of all taxes</span>
             <div className="offers">
@@ -63,28 +120,67 @@ function ItemPage() {
             </div><hr />
 
             <div className="itemD">
-                <span className='is'><b style={{marginRight:"60px"}}>Connectivity<br/>Technology</b><p>Wireless</p></span><br />
-                <span className='is'><b style={{marginRight:"35px"}}>Recommended <br /> Uses For Product	</b><p>Office</p></span><br />
-                <span className='is'><b style={{marginRight:"110px"}}>Brand</b><p>HP</p></span><br />
-                <span className='is'><b style={{marginRight:"70px"}}>Compatible <br /> Devices</b><p>Compatible with HP PCs with available USB-A port.</p></span><br />
-                <span className='is'><b style={{marginRight:"40px"}}>Special Feature</b><p>Wireless, Optical</p></span><br />
+
+                {
+                    aboutdataK.map((cl,n)=>{
+                        return  <><span className='is'><b style={{marginRight:"60px"}}>{aboutdataK[n]}</b><p>{aboutdataV[n]}</p></span><br /></>;
+                    })
+                }
+               
+
+
             </div><hr />
 
             <div className="aboutItems">
                 <h2 style={{fontSize:"15px",marginBottom:"5px"}}>About this item</h2>
                 <ul className='u'>
-                    <li>Stay unbound, stay in control - enjoy lag-free 2.4GHz wireless connectivity on this durable mouse by HP with an 18-month long battery life.</li>
-                    <li>Work at your pace by speeding up or slowing down tracking with adjustable DPI settings up to 1600 (800/1200/1600).</li>
-                    <li>Work on your terms with an ambidextrous, contoured design suitable for both left and right-hand use.</li>
-                    <li>Enjoy great compatibility across devices and on different operating systems - Windows 10, Windows 8, Windows 7, and MacOS 10.1 or higher.</li>
-                    <li>In it for the long run - enjoy 3-years manufacturer warranty on the device from the date of purchase.</li>
+                    {
+                        about.map((cl)=>{
+                            return <><li>{cl}</li></>
+                        })
+                    }
                 </ul>
             </div><hr />
 
 
         </div>
+        <div className="buyDiv">
+            <div  className="data">
+                <div style={{marginBottom:"10px"}} className="">
+                <span >₹</span><span style={{fontSize:"28px"}}>{data.newprice}</span><span>.00</span>
+                </div>
+                <div className="" style={{marginBottom:"10px"}}>
+                <span ><span style={{color:"#007600"}}> FREE delivery</span> {new Date(new Date().setDate(new Date().getDate() + 3)).toDateString()} <span style={{color:"#007600"}}> Details</span></span>
+                </div>
+                <span>Or fastest delivery {new Date(new Date().setDate(new Date().getDate() + 1)).toDateString()}. Order within<span style={{color:"#007600"}}> 1 hr 21 mins. Details</span></span>
+                <div className="" style={{margin:"15px 0 10px 0px"}}>
+                <span style={{color:"#007600", fontSize:"18px"}}><b>In stock.</b></span>
+                </div>
+                <div className="" style={{margin:"0 0 10px 0px"}}>
+                <span style={{ fontSize:"14px"}}>Sold by Appario Retail Private Ltd and<span style={{color:"#007600"}}>Fulfilled by Amazon.</span></span>
+                </div>
+                <button className='btn1' onClick={()=> send(data)}>Add to cart</button>
+                <button className='btn2'>Buy now</button>
+                <span style={{color:"#007600"}}> Secure transaction</span>
+                <div className="" style={{margin:"10px 0 0 3px"}}>
+                    <input type="checkbox" />
+                    <span style={{margin:"0 0 0px 5px"}} >Add gift options</span>
+                </div>
+            </div>
+            
+
         </div>
+
+        </div>
+        <hr style={{width:"80vw", marginLeft:"200px",marginBottom:"10px"}} />
         <hr style={{width:"80vw", marginLeft:"200px"}} />
+
+        <div className="question">
+            <span className='q'><b>Have a question?</b></span>
+            <span className='f'>Find answers in product info, Q&As, reviews</span>
+            <input className='i' type="text" placeholder='Type your question or keyword' />
+        </div>
+
     </Cointainer>
   )
 }
@@ -99,10 +195,30 @@ background-color: white;
         display: flex;
     }
 
+    .question{
+        display: flex;
+        flex-direction: column;
+        margin: 100px 0 0 200px ;
+        .q{
+            margin: 0 0 10px 0;
+            font-size: 24px;
+
+        }
+        .f{
+            font-size: 12px;
+            margin: 0 0 10px 0;
+        }
+        .i{
+            height:30px;
+            width:800px;
+        }
+    }
+
     .itemData{
         margin-top: 100px;
         margin-left: 25px;
-        height:1280px;
+        margin-right: 25px;
+       // height:1280px;
         width: 500px;
         //background-color: #5880008c;
             .heading{
@@ -182,6 +298,52 @@ background-color: white;
             
 
     }
+    .buyDiv{
+        margin-top: 100px;
+        width: 250px;
+        height:500px;
+        border-radius: 5px;
+        border: 1px solid #8b8d8d57;
+            .data{
+               // background-color: green;
+                height: 470px;
+                width: 220px;
+                margin: 15px 15px;
+                    .btn1{
+                        background-color:#FFD814;
+                        display:flex;
+                        align-items: center;
+                        justify-content: center;
+                        width:204px;
+                        height: 29px;
+                        border-radius: 20px;
+                        border: none;
+                        margin: 10px 0;
+                        cursor: pointer;
+
+                    }
+                    .btn1:hover{
+                        background-color: #f1c900;
+                    }
+                    .btn2{
+                        background-color: #FFA41C ;
+                        display:flex;
+                        align-items: center;
+                        justify-content: center;
+                        width:204px;
+                        height: 29px;
+                        border-radius: 20px;
+                        border: none;
+                        margin: 10px 0;
+                        cursor: pointer;
+                    }
+                    .btn2:hover{
+                        background-color: #FF8F00;
+                        
+                    }
+            }
+
+    }
 
 `
 
@@ -190,7 +352,7 @@ const ItemImg = styled.div`
 margin-top: 100px;
 margin-left: 200px;
 //background-color: green;
-max-height: 680px;
+max-height: 710px;
 width: 720px;
 display: flex;
 object-fit: contain;
@@ -200,11 +362,12 @@ object-fit: contain;
         margin-right: 10px;
         margin-bottom: 10px;
         img{
-
+            max-width: 40px;
             border: 1px solid black;
             margin-bottom: 10px;
         }
     }
+    
 
 
 `

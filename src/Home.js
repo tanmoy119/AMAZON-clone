@@ -34,7 +34,9 @@ function SamplePrevArrow(props) {
 
 function Home() {
   const url ='http://localhost:5000/get/cart/data?key=tanmoy';
+  const url2 ='http://localhost:5000/get/product/data?key=tanmoy';
   const [data,setData] = useState([]);
+  const [pdata,setPdata] = useState([]);
 
   useEffect(()=>{
     async function fetchData(){
@@ -44,7 +46,15 @@ function Home() {
     }
     fetchData();
   },[url]);
-  console.log(data);
+  useEffect(()=>{
+    async function fetchData(){
+      const request = await axios.get(url2);
+      setPdata(request.data);
+      //console.log(request);
+    }
+    fetchData();
+  },[url2]);
+ 
   
   const settings = {
     dots: false,
@@ -93,8 +103,10 @@ function Home() {
           </div>
 
           </div>
-          <Row/>
-          <Row/>
+          <Row pdata={pdata}/>
+          <Row pdata={pdata}/>
+          <Row pdata={pdata}/>
+    
 
     </Cointainer>
   )

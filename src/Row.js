@@ -5,44 +5,44 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-function Row() {
+function Row(props) {
+const {pdata}= props;
+    // const data = [
+    //   {
+    //     link:'https://m.media-amazon.com/images/I/51R4FJdgbMS._AC_SY200_.jpg'
+    //   },
+    //   {
+    //     link:'https://m.media-amazon.com/images/I/518ti3ya2YL._AC_SY200_.jpg'
+    //   },
+    //   {
+    //     link:'https://m.media-amazon.com/images/I/518ti3ya2YL._AC_SY200_.jpg'
+    //   },
+    //   {
+    //     link:'https://m.media-amazon.com/images/I/61+3f5q7T6S._AC_SY200_.jpg'
+    //   },
+    //   {
+    //     link:'https://m.media-amazon.com/images/I/514NPRZ1AQL._AC_SY200_.jpg'
+    //   },
+    //   {
+    //     link:'https://m.media-amazon.com/images/I/514NPRZ1AQL._AC_SY200_.jpg'
+    //   },
+    //   {
+    //     link:'https://m.media-amazon.com/images/I/514NPRZ1AQL._AC_SY200_.jpg'
+    //   },
+    //   {
+    //     link:'https://m.media-amazon.com/images/I/514NPRZ1AQL._AC_SY200_.jpg'
+    //   },
+    //   {
+    //     link:'https://m.media-amazon.com/images/I/514NPRZ1AQL._AC_SY200_.jpg'
+    //   },
+    //   {
+    //     link:'https://m.media-amazon.com/images/I/514NPRZ1AQL._AC_SY200_.jpg'
+    //   },
+    //   {
+    //     link:'https://m.media-amazon.com/images/I/518ti3ya2YL._AC_SY200_.jpg'
+    //   }
 
-    const data = [
-      {
-        link:'https://m.media-amazon.com/images/I/51R4FJdgbMS._AC_SY200_.jpg'
-      },
-      {
-        link:'https://m.media-amazon.com/images/I/518ti3ya2YL._AC_SY200_.jpg'
-      },
-      {
-        link:'https://m.media-amazon.com/images/I/518ti3ya2YL._AC_SY200_.jpg'
-      },
-      {
-        link:'https://m.media-amazon.com/images/I/61+3f5q7T6S._AC_SY200_.jpg'
-      },
-      {
-        link:'https://m.media-amazon.com/images/I/514NPRZ1AQL._AC_SY200_.jpg'
-      },
-      {
-        link:'https://m.media-amazon.com/images/I/514NPRZ1AQL._AC_SY200_.jpg'
-      },
-      {
-        link:'https://m.media-amazon.com/images/I/514NPRZ1AQL._AC_SY200_.jpg'
-      },
-      {
-        link:'https://m.media-amazon.com/images/I/514NPRZ1AQL._AC_SY200_.jpg'
-      },
-      {
-        link:'https://m.media-amazon.com/images/I/514NPRZ1AQL._AC_SY200_.jpg'
-      },
-      {
-        link:'https://m.media-amazon.com/images/I/514NPRZ1AQL._AC_SY200_.jpg'
-      },
-      {
-        link:'https://m.media-amazon.com/images/I/518ti3ya2YL._AC_SY200_.jpg'
-      }
-
-    ];
+    // ];
 
     const settings = {
       dots: false,
@@ -64,11 +64,11 @@ function Row() {
         
         
             {
-               data.map((cl)=>{
+               pdata.map((cl,n)=>{
                 return(
                   <Wrap>
-                    <Link to=''>
-                    <img className='img' src={cl.link} alt="https://m.media-amazon.com/images/I/51UhwaQXCpL._AC_SY200_.jpg" />
+                    <Link to={`/item?id=${cl._id}`} as="/item">
+                    <img className='img' src={cl.image.img1} alt="https://m.media-amazon.com/images/I/51UhwaQXCpL._AC_SY200_.jpg" />
                     </Link>
                     </Wrap>
                 )
